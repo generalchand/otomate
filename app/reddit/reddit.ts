@@ -4,7 +4,8 @@ export async function getredditdata(url:URL){
         headers:{
           'Content-Type':'application/json',
         },
-        method: 'GET'
+        method: 'GET',
+        cache:'no-store'
       })
     const data=await res.json();
     console.log(data.data.children[0])
