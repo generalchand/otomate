@@ -22,13 +22,13 @@ export default function Home() {
   const code=searchParams.get("code")
   let [webhook,setWebhook]=useState("")
   
-/*   useEffect(()=>{
+  useEffect(()=>{
     async function fetchwebhook(){
         setWebhook(await getwebhook(code))
     }
      fetchwebhook()
   },[])
-    cronjob(webhook) */
+    cronjob(webhook)
     
   return (
     <>
