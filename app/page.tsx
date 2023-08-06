@@ -1,8 +1,7 @@
 "use client"
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react';
-import { sendSlackdata } from './util';
-import { CLIENT_ID, CLIENT_SECRET } from './secret';
+import { getdata, sendSlackdata } from './util';
 
 export default function Home() {
   
@@ -11,20 +10,10 @@ export default function Home() {
   const code=searchParams.get("code")
   let [webhook,setWebhook]=useState("")
   useEffect(()=>{
-    async function getdata(){
-      const res=await fetch('https://slack.com/api/oauth.v2.access',{
-        body:`client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}`,
-        headers : {
-          "Content-Type": 'application/x-www-form-urlencoded',
-          },
-          method: "POST",
-      })
-      const data=await res.json()
-      setWebhook(data["incoming_webhook"]["url"])
-
-      //console.log((await res.json())["incoming_webhook"])
+    async function fetchdata(){
+        setWebhook(await getdata(code))
     }
-     getdata()
+     fetchdata()
   },[]) 
   console.log(webhook)
   console.log(code)
