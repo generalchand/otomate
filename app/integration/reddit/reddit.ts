@@ -5,7 +5,7 @@ export async function getredditdata(url:URL){
           'Content-Type':'application/json',
         },
         method: 'GET',
-        cache:'no-store'
+        cache:'no-store'//fricking nextjs been caching fetch requests
       })
     const data=await res.json();
     console.log(data.data.children[0])
