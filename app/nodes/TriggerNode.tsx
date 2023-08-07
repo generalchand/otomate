@@ -1,11 +1,11 @@
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import { Handle, Position } from "reactflow";
 
 export function TextInputNode({data}){
     const inputRef=useRef<HTMLInputElement>(null!)
     return(
         <>
-            {/* <Handle type="target" position={Position.Top}/> */}
+           
                 <div className="border-2 border-black">
                     <label htmlFor="text">Endpoint:</label>
                     

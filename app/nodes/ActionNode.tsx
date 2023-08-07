@@ -20,9 +20,13 @@ export function OutputNode({data}){
         cronjob(webhook,data.text)
     }
     return(
-        <div className="border-2 border-black">
-            <Handle type="target" position={Position.Top}/>
-            Output: {data.text}
-        </div>
+        <>
+         <Handle type="target" position={Position.Top}/>
+            <div className="border-2 border-black">
+               
+                Output: {data.text}
+            </div>
+        </>
+        
     )
 }
