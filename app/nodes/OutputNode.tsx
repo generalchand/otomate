@@ -4,7 +4,7 @@ export function OutputNode({data}){
     return(
         <div>
             <Handle type="target" position={Position.Top}/>
-            Output: {data.outputtext}
+            Output: {data.text}
         </div>
     )
 }

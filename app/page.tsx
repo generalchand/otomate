@@ -57,7 +57,7 @@ export default function Home() {
         if(n.id==outputnode.id){
           n.data={
             ...n.data,
-            outputtext:node.data.text
+            text:node.data.text
           }
         }
         return n
