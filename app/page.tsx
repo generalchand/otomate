@@ -1,23 +1,39 @@
 "use client"
 import { useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getwebhook } from './integration/slack/slack'
 import { cronjob } from './jobrunners/cronjob';
-import ReactFlow, { Background, Controls, MiniMap, addEdge, useEdgesState, useNodesState } from 'reactflow';
+import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, OnNodesChange,Node,Edge, addEdge } from 'reactflow';
+import 'reactflow/dist/style.css';
+import { TextInputNode } from './nodes/TextInputNode';
 
-const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: 'tiger lion' },draggable:true },
-  { id: '2', position: { x: 100, y: 100 }, data: { label: '2' } ,draggable:true },
+const initialEdges:Edge[] = [ { id: '1-2', source: '1', target: '2', label: '',type:'straight' } ];
+
+const initialNodes:Node[] = [
+  {
+    id: '1',
+    data: { label: 'Hello' },
+    position: { x: 0, y: 0 },
+    type: 'textInput',
+  },
+  {
+    id: '2',
+    data: { label: 'World' },
+    position: { x: 100, y: 100 },
+    type: 'output'
+  },
 ];
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
 export default function Home() {
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
-  
-  const inputRef=useRef<HTMLInputElement>(null!)
+  const [nodes,setNodes]=useState<Node[]>(initialNodes)
+  const [edges,setEdges]=useState<Edge[]>(initialEdges)
+
+  const onNodesChange:OnNodesChange = useCallback( (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),[] );
+  const onEdgesChange = useCallback( (changes: any) => setEdges((eds) => applyEdgeChanges(changes, eds)),[] );
+  const onConnect = useCallback((params: any) => setEdges((eds) => addEdge(params, eds)), []);
+  const nodeTypes=useMemo(()=>({'textInput':TextInputNode}),[])
+ /*  const inputRef=useRef<HTMLInputElement>(null!)
   const searchParams=useSearchParams();
   const code=searchParams.get("code")
   let [webhook,setWebhook]=useState("")
@@ -28,22 +44,22 @@ export default function Home() {
     }
      fetchwebhook()
   },[])
-    cronjob(webhook)
+    cronjob(webhook) */
     
   return (
     <>
 
-<div style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
+<div style={{ height: '100vh',width:'100vw' }}>
+      <ReactFlow 
+      nodes={nodes} 
+      edges={edges}
+      onNodesChange={onNodesChange}
+      onEdgesChange={onEdgesChange}
+      onConnect={onConnect}
+      nodeTypes={nodeTypes}
       >
+        <Background />
         <Controls />
-        <MiniMap />
-        <Background gap={12} size={1} />
       </ReactFlow>
     </div>
     
