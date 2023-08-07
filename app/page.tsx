@@ -1,8 +1,5 @@
 "use client"
-import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getwebhook } from './integration/slack/slack'
-import { cronjob } from './jobrunners/cronjob';
 import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, OnNodesChange,Node,Edge, addEdge} from 'reactflow';
 import 'reactflow/dist/style.css';
 import { TextInputNode } from './nodes/TextInputNode';
@@ -12,16 +9,18 @@ const initialEdges:Edge[] = [ /* { id: '1-2', source: '1', target: '2', label: '
 
 const initialNodes:Node[] = [
   {
-    id: 'yomama',
+    id: '1',
     data: {
-      text:''
+      text:undefined
      },
     position: { x: 0, y: 0 },
     type: 'textInput',
   },
   {
     id: '2',
-    data: { text:'yomama' },
+    data: { 
+      text:undefined 
+    },
     position: { x: 100, y: 100 },
     type: 'logOutput'
   },
@@ -35,25 +34,18 @@ export default function Home() {
 
   const [nodes,setNodes]=useState<Node[]>(initialNodes)
   const [edges,setEdges]=useState<Edge[]>(initialEdges)
-  const [elements,setElements]=useState([])
+  const [params,setParams]=useState()
   const onNodesChange:OnNodesChange = useCallback( (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),[] );
   const onEdgesChange = useCallback( (changes: any) => setEdges((eds) => applyEdgeChanges(changes, eds)),[] );
 
   let param;
   const onConnect = (params: any) => {
-    param=params
+    setParams(params)
     let node=nodes.find(n=>n.id===params.source)
     if(node.type==='textInput')
     {
-      setEdges((eds) => addEdge(params, eds))
-    }
-  }
-
-  useEffect(()=>{
-    if(param){
-      let node=nodes.find(n=>n.id===param.source)
       setNodes((nds)=>nds.map((n)=>{
-        let outputnode=nodes.find(n=>n.id===param.target)
+        let outputnode=nodes.find(n=>n.id===params?.target)
         if(n.id==outputnode.id){
           n.data={
             ...n.data,
@@ -62,9 +54,10 @@ export default function Home() {
         }
         return n
       }))
+      setEdges((eds) => addEdge(params, eds))
     }
-    
-  },[onConnect])
+  }
+  console.log(nodes)
   
   const nodeTypes=useMemo(()=>(
     {

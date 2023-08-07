@@ -3,12 +3,15 @@ import { sendSlackMsg } from "../integration/slack/slack"
 
 
 
-export function cronjob(webhook:string){
+export function cronjob(webhook:string,endpoint:string){
+  let c=0;
   function fetchredditdata(){
-    getredditdata(new URL("https://www.reddit.com/r/AskReddit/new/.json")).then(res=>{
+    c++;
+    if(endpoint)
+    getredditdata(new URL(endpoint)).then(res=>{
       console.log(webhook)
       if(webhook)
-      sendSlackMsg(new URL(webhook),`New post made by ${res["data"]["author_fullname"]} \n link: ${res["data"]["url"]}`)
+      sendSlackMsg(new URL(webhook),`New post made by ${res["data"]["author_fullname"]} \n link: ${res["data"]["url"]} ${c} times`)
     })
   }
   
