@@ -13,16 +13,16 @@ const initialNodes:Node[] = [
     data: {
       text:undefined
      },
-    position: { x: 0, y: 0 },
-    type: 'textInput',
+    position: { x: 500, y: 50 },
+    type: 'trigger',
   },
   {
     id: '2',
     data: { 
       text:undefined 
     },
-    position: { x: 100, y: 100 },
-    type: 'logOutput'
+    position: { x: 500, y: 500 },
+    type: 'action'
   },
 ];
 
@@ -37,7 +37,7 @@ export default function Home() {
   const onConnect = (params: any) => {
     
     let node=nodes.find(n=>n.id===params.source)
-    if(node.type==='textInput')
+    if(node.type==='trigger')
     {
       setNodes((nds)=>nds.map((n)=>{
         let outputnode=nodes.find(n=>n.id===params?.target)
@@ -56,8 +56,8 @@ export default function Home() {
   
   const nodeTypes=useMemo(()=>(
     {
-    'textInput':TriggerNode,
-    'logOutput':ActionNode
+    'trigger':TriggerNode,
+    'action':ActionNode
   }),[])
  
     
