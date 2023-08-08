@@ -77,7 +77,7 @@ export default function Home() {
     
   return (
     <>
-    <div className='flex flex-row' style={{height:'100vh'}}>
+    <div className='flex flex-row bg-gray-100' style={{height:'100vh'}}>
 
     <div style={{flex:0.7}}>
             <ReactFlow 
@@ -89,18 +89,18 @@ export default function Home() {
             nodeTypes={nodeTypes}
             style={{width:'100%',height:'100%'}}
             >
-              <Background />
+             {/*  <Background /> */}
               <Controls />
             </ReactFlow>
       </div>
-      <div className='bg-red-500' style={{flex:0.3}}>
-        <div style={{margin:'20px',fontSize:'2rem'}}>
+      <div className='bg-white ' style={{flex:0.3}}>
+        <div  style={{margin:'20px',fontSize:'2rem'}}>
         Tools
         </div> 
-        <div style={{margin:'20px',fontSize:'1.2rem'}}>
+        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
         <button onClick={()=>{addNode('trigger')}}>Trigger</button> 
         </div>
-        <div style={{margin:'20px',fontSize:'1.2rem'}}>
+        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
           <button onClick={()=>{addNode('action')}}>Actions</button>
         </div>
       </div>

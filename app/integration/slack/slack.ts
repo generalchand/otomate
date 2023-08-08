@@ -1,6 +1,7 @@
 "use server"
 
 import { CLIENT_ID, CLIENT_SECRET } from "@/app/secret";
+import { Console } from "console";
 
 /*  */
 export async function sendSlackMsg(webhook:URL,value:String){
@@ -17,6 +18,7 @@ export async function sendSlackMsg(webhook:URL,value:String){
 }
 
 export async function getwebhook(code:String){
+  console.log(code)
   const res=await fetch('https://slack.com/api/oauth.v2.access',{
     body:`client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}`,
     headers : {

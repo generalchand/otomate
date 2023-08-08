@@ -24,7 +24,7 @@ export function TriggerNode({data}){
         setSelected(event.target.value)
     }
     return(
-        <div className="flex flex-col border-2 border-black w-96 h-40">
+        <div className="flex flex-col border-2 border-black w-96 h-40 bg-white">
             Trigger
             <div>
             App:
