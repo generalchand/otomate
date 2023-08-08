@@ -2,8 +2,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, OnNodesChange,Node,Edge, addEdge} from 'reactflow';
 import 'reactflow/dist/style.css';
-import { TextInputNode } from './nodes/TriggerNode';
-import { OutputNode } from './nodes/ActionNode';
+import { TriggerNode } from './nodes/TriggerNode';
+import { ActionNode } from './nodes/ActionNode';
 
 const initialEdges:Edge[] = [ /* { id: '1-2', source: '1', target: '2', label: '',type:'straight' } */ ];
 
@@ -56,8 +56,8 @@ export default function Home() {
   
   const nodeTypes=useMemo(()=>(
     {
-    'textInput':TextInputNode,
-    'logOutput':OutputNode
+    'textInput':TriggerNode,
+    'logOutput':ActionNode
   }),[])
  
     

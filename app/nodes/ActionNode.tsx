@@ -3,9 +3,10 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Handle, Position } from "reactflow";
 import { getwebhook } from "../integration/slack/slack";
-import { cronjob } from "../jobrunners/cronjob";
+import { slackCronJob } from "../integration/slack/slack.cron";
 
-export function OutputNode({data}){
+
+export function ActionNode({data}){
     const searchParams=useSearchParams();
     const code=searchParams.get("code")
     let [webhook,setWebhook]=useState("")
@@ -17,7 +18,7 @@ export function OutputNode({data}){
     },[])
     if(data.text){
         
-        cronjob(webhook,data.text)
+        slackCronJob(webhook,data.text)
     }
     return(
         <>
