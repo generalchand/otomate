@@ -8,7 +8,7 @@ import { ActionNode } from './nodes/ActionNode';
 const initialEdges:Edge[] = [ /* { id: '1-2', source: '1', target: '2', label: '',type:'straight' } */ ];
 
 const initialNodes:Node[] = [
-  {
+ /*  {
     id: '1',
     data: {
       text:undefined
@@ -23,7 +23,7 @@ const initialNodes:Node[] = [
     },
     position: { x: 500, y: 500 },
     type: 'action'
-  },
+  }, */
 ];
 
 export default function Home() {
@@ -59,12 +59,27 @@ export default function Home() {
     'trigger':TriggerNode,
     'action':ActionNode
   }),[])
+
+  const addNode=(type:string)=>{
+    setNodes((nds)=>{
+      let node={
+        id: `${nds.length+1}`,
+        data: {
+          text:undefined
+         },
+        position: { x: 0, y: 0 },
+        type: type,
+      }
+      return [...nds,node]
+    })
+  }
  
     
   return (
     <>
+    <div className='flex flex-row' style={{height:'100vh'}}>
 
-      <div style={{ height: '100vh',width:'100vw' }}>
+    <div style={{flex:0.7}}>
             <ReactFlow 
             nodes={nodes} 
             edges={edges}
@@ -72,13 +87,25 @@ export default function Home() {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
+            style={{width:'100%',height:'100%'}}
             >
               <Background />
               <Controls />
             </ReactFlow>
       </div>
-    
-    
+      <div className='bg-red-500' style={{flex:0.3}}>
+        <div style={{margin:'20px',fontSize:'2rem'}}>
+        Tools
+        </div> 
+        <div style={{margin:'20px',fontSize:'1.2rem'}}>
+        <button onClick={()=>{addNode('trigger')}}>Trigger</button> 
+        </div>
+        <div style={{margin:'20px',fontSize:'1.2rem'}}>
+          <button onClick={()=>{addNode('action')}}>Actions</button>
+        </div>
+      </div>
+    </div>
+      
     </>
   )
 }
