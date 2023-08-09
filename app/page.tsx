@@ -44,7 +44,10 @@ export default function Home() {
         if(n.id==outputnode.id){
           n.data={
             ...n.data,
-            text:node.data.text
+            text:node.data.text,
+            triggertype:node.data.triggertype,
+            email:node.data.email,
+            password:node.data.password
           }
         }
         return n
@@ -57,7 +60,7 @@ export default function Home() {
   const nodeTypes=useMemo(()=>(
     {
     'trigger':TriggerNode,
-    'action':ActionNode
+    'action':ActionNode,
   }),[])
 
   const addNode=(type:string)=>{

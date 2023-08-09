@@ -1,7 +1,5 @@
 "use server"
-
 import { CLIENT_ID, CLIENT_SECRET } from "@/app/secret";
-import { Console } from "console";
 
 /*  */
 export async function sendSlackMsg(webhook:URL,value:String){
