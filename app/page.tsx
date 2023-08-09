@@ -4,6 +4,7 @@ import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, On
 import 'reactflow/dist/style.css';
 import { TriggerNode } from './nodes/TriggerNode';
 import { ActionNode } from './nodes/ActionNode';
+import { LlmNode } from './nodes/LlmNode';
 
 const initialEdges:Edge[] = [ /* { id: '1-2', source: '1', target: '2', label: '',type:'straight' } */ ];
 
@@ -18,8 +19,8 @@ const initialNodes:Node[] = [
   },
   {
     id: '2',
-    data: { 
-      text:undefined 
+    data: {
+      text:undefined
     },
     position: { x: 500, y: 500 },
     type: 'action'
@@ -33,9 +34,9 @@ export default function Home() {
   const onNodesChange:OnNodesChange = useCallback( (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),[] );
   const onEdgesChange = useCallback( (changes: any) => setEdges((eds) => applyEdgeChanges(changes, eds)),[] );
 
-  
+
   const onConnect = (params: any) => {
-    
+
     let node=nodes.find(n=>n.id===params.source)
     if(node.type==='trigger')
     {
@@ -55,12 +56,12 @@ export default function Home() {
       setEdges((eds) => addEdge(params, eds))
     }
   }
-  console.log(nodes)
-  
+
   const nodeTypes=useMemo(()=>(
     {
     'trigger':TriggerNode,
     'action':ActionNode,
+    'llm':LlmNode,
   }),[])
 
   const addNode=(type:string)=>{
@@ -75,16 +76,17 @@ export default function Home() {
       }
       return [...nds,node]
     })
+    console.log(nodes)
   }
- 
-    
+
+
   return (
     <>
     <div className='flex flex-row bg-gray-100' style={{height:'100vh'}}>
 
     <div style={{flex:0.7}}>
-            <ReactFlow 
-            nodes={nodes} 
+            <ReactFlow
+            nodes={nodes}
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
@@ -99,16 +101,19 @@ export default function Home() {
       <div className='bg-white ' style={{flex:0.3}}>
         <div  style={{margin:'20px',fontSize:'2rem'}}>
         Tools
-        </div> 
+        </div>
         <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
-        <button onClick={()=>{addNode('trigger')}}>Trigger</button> 
+        <button onClick={()=>{addNode('trigger')}}>Trigger</button>
         </div>
         <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
           <button onClick={()=>{addNode('action')}}>Actions</button>
         </div>
+        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
+          <button onClick={()=>{addNode('llm')}}>LLM</button>
+        </div>
       </div>
     </div>
-      
+
     </>
   )
 }
