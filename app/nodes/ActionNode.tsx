@@ -1,9 +1,6 @@
 "use client"
-import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Handle, Position } from "reactflow";
-import { getwebhook } from "../integration/slack/slack";
-import { slackCronJob } from "../integration/slack/slack.cron";
 import { SlackComponent } from "../integration/slack/slack.action.component";
 
 
@@ -12,7 +9,6 @@ export function ActionNode({data}){
     
     const [selected,setSelected]=useState('')
     const onSelect=(event)=>{
-        console.log(event.target.value)
         setSelected(event.target.value)
     }
     

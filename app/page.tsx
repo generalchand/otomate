@@ -4,6 +4,7 @@ import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, On
 import 'reactflow/dist/style.css';
 import { TriggerNode } from './nodes/TriggerNode';
 import { ActionNode } from './nodes/ActionNode';
+import { LlmNode } from './nodes/LlmNode';
 
 const initialEdges:Edge[] = [ /* { id: '1-2', source: '1', target: '2', label: '',type:'straight' } */ ];
 
@@ -18,8 +19,8 @@ const initialNodes:Node[] = [
   },
   {
     id: '2',
-    data: { 
-      text:undefined 
+    data: {
+      text:undefined
     },
     position: { x: 500, y: 500 },
     type: 'action'
@@ -34,9 +35,9 @@ export default function Home() {
   const onNodesChange:OnNodesChange = useCallback( (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),[] );
   const onEdgesChange = useCallback( (changes: any) => setEdges((eds) => applyEdgeChanges(changes, eds)),[] );
 
-  
+
   const onConnect = (params: any) => {
-    
+
     let node=nodes.find(n=>n.id===params.source)
     if(node.type==='trigger')
     {
@@ -45,20 +46,42 @@ export default function Home() {
         if(n.id==outputnode.id){
           n.data={
             ...n.data,
-            text:node.data.text
+            text:node.data.text,
+            triggertype:node.data.triggertype,
+            email:node.data.email,
+            password:node.data.password,
+            sourcenode:node
+          }
+        }
+        return n
+      }))
+     
+      setEdges((eds) => addEdge(params, eds))
+    }
+    if(node.type==='llm'){
+      setNodes((nds)=>nds.map((n)=>{
+        let outputnode=nodes.find(n=>n.id===params?.target)
+        if(n.id==outputnode.id){
+          n.data={
+            ...n.data,
+            text:node.data.text,
+            triggertype:node.data.triggertype,
+            email:node.data.email,
+            password:node.data.password
           }
         }
         return n
       }))
       setEdges((eds) => addEdge(params, eds))
+      console.log(nodes)
     }
   }
-  console.log(nodes)
-  
+
   const nodeTypes=useMemo(()=>(
     {
     'trigger':TriggerNode,
-    'action':ActionNode
+    'action':ActionNode,
+    'llm':LlmNode,
   }),[])
 
   const addNode=(type:string)=>{
@@ -73,23 +96,10 @@ export default function Home() {
       }
       return [...nds,node]
     })
+    console.log(nodes)
   }
 
 
-  const gradientStyle = {
-    background: 'isHovered'
-      ? 'linear-gradient(180deg, #F4F3FD 11.46%, #F4F9FE 61.98%)' 
-      : 'linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', 
-    transition: 'background-color 0.3s ease-in-out', 
-    padding: '10px 20px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    border: 'none',
-    color: '#fff', 
-    fontSize: '16px',
-  };
- 
-    
   return (
     <>
     <div className='flex flex-row bg-gray-100 justify-between' style={{height:'100vh'}}>
@@ -97,6 +107,7 @@ export default function Home() {
     <div className='grow'>
             <ReactFlow 
             nodes={nodes} 
+
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
@@ -122,10 +133,14 @@ export default function Home() {
           <div className='hover:bg-slate-100'>
             <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', }} className='w-full py-2 px-4 ' onClick={()=>{addNode('action')}}>Actions</button>
           </div>
+
+        </div>
+        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
+          <button onClick={()=>{addNode('llm')}}>LLM</button>
         </div>
       </div>
     </div>
-      
+
     </>
   )
 }

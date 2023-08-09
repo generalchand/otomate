@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { getwebhook } from "./slack"
 import { useSearchParams } from "next/navigation";
-import { slackCronJob } from "./slack.cron";
+import { redditCronJob } from "../reddit/reddit.cron";
+import { gmailCronJob } from "../gmail/gmail.cron";
 
 export function SlackComponent(props){
-    const searchParams=useSearchParams();
     const code=localStorage.getItem("slackCode")
     let [webhook,setWebhook]=useState("")
     console.log(code)
@@ -15,9 +15,27 @@ export function SlackComponent(props){
         }
         fetchwebhook()
     },[])
-    if(props.data.text){
-        slackCronJob(webhook,props.data.text)
+    console.log("bruh ",props.data)
+    switch(props.data.triggertype){
+        case 'reddit':
+                console.log("reddit is called")
+                if(props.data.text){
+                redditCronJob(webhook,props.data.text)
+                props.data.text=undefined
+                }
+                //props.data.triggertype=undefined
+        break;
+        case 'gmail':
+            if(props.data.email && props.data.password){
+                console.log("gmail is called")
+                gmailCronJob(webhook,props.data.email,props.data.password,props.data).then(()=>{
+                    
+                })
+                
+                //props.data.triggertype=undefined
+            }
     }
+   
     return(
         <div className="flex gap-3 items-center">
         <div >Endpoint: {props.data.text}</div>
