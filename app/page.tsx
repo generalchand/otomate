@@ -133,11 +133,12 @@ export default function Home() {
           <div className='hover:bg-slate-100'>
             <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', }} className='w-full py-2 px-4 ' onClick={()=>{addNode('action')}}>Actions</button>
           </div>
+          <div className='hover:bg-slate-100' >
+          <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', }} className='w-full py-2 px-4 ' onClick={()=>{addNode('llm')}}>LLM</button>
+        </div>
 
         </div>
-        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
-          <button onClick={()=>{addNode('llm')}}>LLM</button>
-        </div>
+        
       </div>
     </div>
 
