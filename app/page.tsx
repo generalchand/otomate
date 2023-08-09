@@ -74,6 +74,20 @@ export default function Home() {
       return [...nds,node]
     })
   }
+
+
+  const gradientStyle = {
+    background: 'isHovered'
+      ? 'linear-gradient(180deg, #F4F3FD 11.46%, #F4F9FE 61.98%)' 
+      : 'linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', 
+    transition: 'background-color 0.3s ease-in-out', 
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    border: 'none',
+    color: '#fff', 
+    fontSize: '16px',
+  };
  
     
   return (
@@ -103,10 +117,10 @@ export default function Home() {
 
         <div className='text-[1.2rem] flex flex-col gap-8 '>
           <div className='hover:bg-slate-100' >
-          <button className='w-full py-2 px-4 bg-slate-100 hover:bg-slate-200 active:bg-slate-200 focus:outline-none focus:ring focus:ring-slate-300' onClick={()=>{addNode('trigger')}}>Trigger</button>
+          <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)' }} className='w-full py-2 px-4' onClick={()=>{addNode('trigger')}}>Trigger</button>
           </div>
           <div className='hover:bg-slate-100'>
-            <button className='w-full py-2 px-4 bg-slate-100 hover:bg-slate-200 active:bg-slate-200 focus:outline-none focus:ring focus:ring-slate-300 ' onClick={()=>{addNode('action')}}>Actions</button>
+            <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', }} className='w-full py-2 px-4 ' onClick={()=>{addNode('action')}}>Actions</button>
           </div>
         </div>
       </div>
