@@ -2,15 +2,19 @@
 import Imap from 'imap';
 import { simpleParser } from 'mailparser';
 
-export async function getgmailinbox() {
-    const imapConfig = {
-        user: 'otomate2002@gmail.com',
-        password: 'nntynyrzszxcfyyb',
-        host: 'imap.gmail.com',
-        port: 993,
-        tls: true,
-        tlsOptions: { rejectUnauthorized: false }
-    };
+interface ImapConf{
+    user: string,
+    password:string,
+    host:string,
+    port:number,
+    tls:boolean,
+    tlsOptions:{
+        rejectUnauthorized:boolean
+    }
+}
+
+export async function getgmailinbox(imapConfig:ImapConf) {
+    
 
     return new Promise((resolve, reject) => {
         const imap = new Imap(imapConfig);
@@ -31,6 +35,7 @@ export async function getgmailinbox() {
                                     reject(err);
                                     return;
                                 }
+                                console.log(parsed)
                                 resolve(parsed);
                             });
                         });

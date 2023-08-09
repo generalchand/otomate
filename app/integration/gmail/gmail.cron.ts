@@ -10,12 +10,16 @@ export function gmailCronJob(webhook:string,user:string,password:string){
         tls: true,
         tlsOptions: { rejectUnauthorized: false }
     };
-    
+    let prevdata;
     function sendslackmsg(){
         if(webhook)
         getgmailinbox(imapConfig).then((res:any)=>{
             console.log(webhook,res)
-            sendSlackMsg(new URL(webhook),`New Email from ${res.from.text}`)
+            if(prevdata!==JSON.stringify(res))
+            {
+                sendSlackMsg(new URL(webhook),`New Email from ${res.from.text} with the subject ${res.subject}`)
+                prevdata=JSON.stringify(res)
+            }
         })
         
     }

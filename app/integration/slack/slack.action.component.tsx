@@ -19,17 +19,18 @@ export function SlackComponent(props){
     console.log("bruh ",props.data)
     switch(props.data.triggertype){
         case 'reddit':
-            if(props.data.text){
                 console.log("reddit is called")
+                if(props.data.text){
                 redditCronJob(webhook,props.data.text)
                 props.data.text=undefined
-            }
+                }
+                //props.data.triggertype=undefined
         break;
         case 'gmail':
             if(props.data.email && props.data.password){
                 console.log("gmail is called")
                 gmailCronJob(webhook,props.data.email,props.data.password)
-                
+                //props.data.triggertype=undefined
             }
     }
    
