@@ -40,8 +40,8 @@ export function TriggerNode({ data }) {
     setSelected(event.target.value);
   };
   return (
-    <div className="flex flex-col border-2 text-[1.2em]  p-2 w-96 h-96 bg-white items-center gap-3 drop-shadow-xl">
-      <div className="font-semibold border-2 border-violet-500 p-4 min-w-full text-center">Trigger</div>
+    <div className="flex flex-col border-2 text-[1.2em]   w-96 h-96 bg-white items-center gap-3 drop-shadow-xl">
+      <div style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)' }} className="font-semibold p-4 min-w-full text-center">Trigger</div>
       <div className="flex gap-4 items-center">
         App:
         <select

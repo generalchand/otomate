@@ -17,9 +17,9 @@ export function ActionNode({data}){
     }
     
     return(
-        <div className="flex flex-col border-2 text-[1.2em] bg-white  p-2  w-96 h-96  items-start gap-3 drop-shadow-xl ">
+        <div className="flex flex-col border-2 text-[1.2em] bg-white   w-96 h-96  items-start gap-3 drop-shadow-xl ">
         <Handle type="target" position={Position.Top}/>
-        <div className=" font-semibold border-2 border-violet-500 p-4 min-w-full text-center">Action</div>
+        <div  style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)' }} className=" font-semibold border-2  p-4 min-w-full text-center">Action</div>
         <div className="flex flex-col gap-2 items-center">
 
             <div className="text-[1.2rem] flex flex-col gap-4  ml-5">
