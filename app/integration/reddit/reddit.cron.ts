@@ -1,11 +1,11 @@
-import { sendSlackMsg } from "./slack";
-import { getredditdata } from "../reddit/reddit";
+import { sendSlackMsg } from "../slack/slack";
+import { getredditdata } from "./reddit";
 
 
 
-export function slackCronJob(webhook:string,endpoint:string){
+export function redditCronJob(webhook:string,endpoint:string){
   
-  function fetchredditdata(){
+  function sendslackmsg(){
     if(endpoint)
     getredditdata(new URL(endpoint)).then(res=>{
       console.log(webhook)
@@ -15,5 +15,5 @@ export function slackCronJob(webhook:string,endpoint:string){
   }
   
 
-  setInterval(fetchredditdata,12000)
+  setInterval(sendslackmsg,120000)
 }

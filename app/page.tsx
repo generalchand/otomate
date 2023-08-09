@@ -36,27 +36,24 @@ export default function Home() {
 
 
   const onConnect = (params: any) => {
-    let sourceNode = nodes.find(n => n.id === params.source);
-    let targetNode = nodes.find(n => n.id === params.target);
 
-    if (sourceNode && targetNode) {
-        if (sourceNode.type === 'trigger' && (targetNode.type === 'llm' || targetNode.type === 'action')) {
-            setNodes((nds) => nds.map((n) => {
-                if (n.id === targetNode.id) {
-                    n.data = {
-                        ...n.data,
-                        text: sourceNode.data.text
-                    };
-                    console.log(n.data.text)
-                }
-                return n;
-            }));
-            setEdges((eds) => addEdge(params, eds));
-        } else {
-            console.log("Invalid connection: Only trigger to llm or action connections are allowed.");
+    let node=nodes.find(n=>n.id===params.source)
+    if(node.type==='trigger')
+    {
+      setNodes((nds)=>nds.map((n)=>{
+        let outputnode=nodes.find(n=>n.id===params?.target)
+        if(n.id==outputnode.id){
+          n.data={
+            ...n.data,
+            text:node.data.text,
+            triggertype:node.data.triggertype,
+            email:node.data.email,
+            password:node.data.password
+          }
         }
-    } else {
-        console.log("Invalid source or target node.");
+        return n
+      }))
+      setEdges((eds) => addEdge(params, eds))
     }
   }
 
