@@ -89,24 +89,24 @@ export default function Home() {
             onConnect={onConnect}
             nodeTypes={nodeTypes}
             style={{width:'100%',height:'100%'}}
-            className='bg-slate-200'
             connectionLineStyle={{stroke:'rgb(139,92,246)',strokeWidth:2}}
+            
             >
              {/*  <Background /> */}
               <Controls />
             </ReactFlow>
       </div>
-      <div className='bg-white p-6 mb-6' >
+      <div className='bg-white p-6 mb-6 drop-shadow-xl ' >
         <div  className='text-[2rem] mx-20 my-5 font-semibold '>
         Tools
         </div> 
 
-        <div className='text-[1.2rem] flex flex-col gap-8  text-slate-50'>
+        <div className='text-[1.2rem] flex flex-col gap-8 '>
           <div className='hover:bg-slate-100' >
-          <button className='w-full py-2 px-4 bg-violet-500 hover:bg-violet-700 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 rounded-md' onClick={()=>{addNode('trigger')}}>Trigger</button>
+          <button className='w-full py-2 px-4 bg-slate-100 hover:bg-slate-200 active:bg-slate-200 focus:outline-none focus:ring focus:ring-slate-300' onClick={()=>{addNode('trigger')}}>Trigger</button>
           </div>
           <div className='hover:bg-slate-100'>
-            <button className='w-full py-2 px-4 bg-violet-500 hover:bg-violet-700 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 rounded-md' onClick={()=>{addNode('action')}}>Actions</button>
+            <button className='w-full py-2 px-4 bg-slate-100 hover:bg-slate-200 active:bg-slate-200 focus:outline-none focus:ring focus:ring-slate-300 ' onClick={()=>{addNode('action')}}>Actions</button>
           </div>
         </div>
       </div>
