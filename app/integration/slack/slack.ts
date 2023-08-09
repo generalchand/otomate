@@ -9,10 +9,12 @@ export async function sendSlackMsg(webhook:URL,value:String){
         'Content-Type':'application/json',
       },
       method: 'POST',
-      body:JSON.stringify({text:value})
+      body:JSON.stringify({text:value}),
+      cache:'no-store'
     })
     const data=await res.text();
     console.log(data)
+    return data
 }
 
 export async function getwebhook(code:String){
