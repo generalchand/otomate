@@ -48,7 +48,8 @@ export default function Home() {
             text:node.data.text,
             triggertype:node.data.triggertype,
             email:node.data.email,
-            password:node.data.password
+            password:node.data.password,
+            sourcenode:node
           }
         }
         return n

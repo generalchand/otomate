@@ -1,7 +1,7 @@
 import { sendSlackMsg } from "../slack/slack"
 import { getgmailinbox } from "./gmail"
 
-export function gmailCronJob(webhook: string, user: string, password: string, textobj: { text: any }) {
+export function gmailCronJob(webhook: string, user: string, password: string, textobj: any) {
     return new Promise<void>((resolve, reject) => {
         const imapConfig = {
             user: user,
@@ -18,7 +18,7 @@ export function gmailCronJob(webhook: string, user: string, password: string, te
             if (webhook) {
                 getgmailinbox(imapConfig).then((res: any) => {
                     console.log(webhook, res);
-                    textobj.text = res;
+                    textobj.sourcenode.data.text = res;
                     if (prevdata !== JSON.stringify(res)) {
                         sendSlackMsg(new URL(webhook), `New Email from ${res.from.text} with the subject ${res.subject}`);
                         prevdata = JSON.stringify(res);

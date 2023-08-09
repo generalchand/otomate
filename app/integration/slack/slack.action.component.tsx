@@ -5,7 +5,6 @@ import { redditCronJob } from "../reddit/reddit.cron";
 import { gmailCronJob } from "../gmail/gmail.cron";
 
 export function SlackComponent(props){
-    const searchParams=useSearchParams();
     const code=localStorage.getItem("slackCode")
     let [webhook,setWebhook]=useState("")
     console.log(code)
