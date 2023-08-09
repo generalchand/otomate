@@ -27,6 +27,7 @@ const initialNodes:Node[] = [
 ];
 
 export default function Home() {
+ 
 
   const [nodes,setNodes]=useState<Node[]>(initialNodes)
   const [edges,setEdges]=useState<Edge[]>(initialEdges)
@@ -77,9 +78,9 @@ export default function Home() {
     
   return (
     <>
-    <div className='flex flex-row bg-gray-100' style={{height:'100vh'}}>
+    <div className='flex flex-row bg-gray-100 justify-between' style={{height:'100vh'}}>
 
-    <div style={{flex:0.7}}>
+    <div className='grow'>
             <ReactFlow 
             nodes={nodes} 
             edges={edges}
@@ -88,20 +89,25 @@ export default function Home() {
             onConnect={onConnect}
             nodeTypes={nodeTypes}
             style={{width:'100%',height:'100%'}}
+            className='bg-slate-200'
+            connectionLineStyle={{stroke:'rgb(139,92,246)',strokeWidth:2}}
             >
              {/*  <Background /> */}
               <Controls />
             </ReactFlow>
       </div>
-      <div className='bg-white ' style={{flex:0.3}}>
-        <div  style={{margin:'20px',fontSize:'2rem'}}>
+      <div className='bg-white p-6 mb-6' >
+        <div  className='text-[2rem] mx-20 my-5 font-semibold '>
         Tools
         </div> 
-        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
-        <button onClick={()=>{addNode('trigger')}}>Trigger</button> 
-        </div>
-        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
-          <button onClick={()=>{addNode('action')}}>Actions</button>
+
+        <div className='text-[1.2rem] flex flex-col gap-8  text-slate-50'>
+          <div className='hover:bg-slate-100' >
+          <button className='w-full py-2 px-4 bg-violet-500 hover:bg-violet-700 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 rounded-md' onClick={()=>{addNode('trigger')}}>Trigger</button>
+          </div>
+          <div className='hover:bg-slate-100'>
+            <button className='w-full py-2 px-4 bg-violet-500 hover:bg-violet-700 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 rounded-md' onClick={()=>{addNode('action')}}>Actions</button>
+          </div>
         </div>
       </div>
     </div>

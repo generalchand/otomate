@@ -17,14 +17,14 @@ export function ActionNode({data}){
     }
     
     return(
-        <div className="flex flex-col border-2 border-black w-96 h-40">
+        <div className="flex flex-col border-2 text-[1.2em]   border-violet-500 p-2 rounded-md w-96 h-96 bg-slate-100 items-center gap-3">
         <Handle type="target" position={Position.Top}/>
-        Action
-        <div className="">
+        <div className="font-semibold">Action</div>
+        <div className="flex flex-col gap-2 items-center">
 
-            <div>
+            <div className="text-[1.2rem]">
                 App:
-                <select name="" id="" defaultValue="none" onChange={onSelect}>
+                <select className="w-48 ml-2" name="" id="" defaultValue="none" onChange={onSelect}>
                 <option value="none">None</option>
                 <option value="slack">Slack</option>
                </select>
