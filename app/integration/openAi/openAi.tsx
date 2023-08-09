@@ -1,14 +1,40 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
+import { OpenAI } from 'langchain/llms/openai'
+import { PromptTemplate } from 'langchain/prompts'
+import { LLMChain, SimpleSequentialChain } from 'langchain/chains'
 
-function OpenAiComponent({data}) {
+function OpenAiComponent({data, mailBody}) {
     const [apiKey, setApiKey] = useState('')
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         //process logic here
+        const model = new OpenAI({ openAIApiKey : apiKey})
         switch(e.target.value){
             case 'classify':
-                console.log('Classification is done here')
+
+                const delay = async (ms) => { return new Promise((resolve) => setTimeout(resolve, ms)) }
+
+                const makeApiCall = async () => {
+                try {
+                    const firstTemplate = "You are a classifier, you classify the following body of the mail: {mailBody} into\
+                   two classes, which are 'CUSTOMER COMPLAINT' and 'ORDER CONFIRMATION', IMPORTANT: strictly output '1' for 'CUSTOMER COMPLAINT'\
+                   and '2' for 'ORDER CONFIRMATION'";
+
+                    const firstPrompt = new PromptTemplate({inputVariables: ["mailBody"], template: firstTemplate})
+                    const firstChain = new LLMChain({ llm: model, prompt: firstPrompt})
+
+                    const firstOutput = await firstChain.call({ mailBody: mailBody });
+
+                    console.log(firstOutput);
+
+                    await delay(1000);
+                } catch (error) {
+                    console.error(error);
+                }
+                }
+
+                await makeApiCall();
 
             default:
                 console.log('NA')

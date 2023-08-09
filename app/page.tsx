@@ -38,10 +38,10 @@ export default function Home() {
   const onConnect = (params: any) => {
 
     let node=nodes.find(n=>n.id===params.source)
-    if(node.type==='trigger')
+    let outputnode=nodes.find(n=>n.id===params?.target)
+    if(node.type==='trigger' || node.type==='llm')
     {
       setNodes((nds)=>nds.map((n)=>{
-        let outputnode=nodes.find(n=>n.id===params?.target)
         if(n.id==outputnode.id){
           n.data={
             ...n.data,
