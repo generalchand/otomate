@@ -1,5 +1,5 @@
-// "use server"
-// import { CLIENT_ID, CLIENT_SECRET } from "@/app/secret";
+"use server"
+import { CLIENT_ID, CLIENT_SECRET } from "@/app/secret";
 /*  */
 export async function sendSlackMsg(webhook:URL,value:String){
   console.log(webhook,value)

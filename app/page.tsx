@@ -53,7 +53,25 @@ export default function Home() {
         }
         return n
       }))
+     
       setEdges((eds) => addEdge(params, eds))
+    }
+    if(node.type==='llm'){
+      setNodes((nds)=>nds.map((n)=>{
+        let outputnode=nodes.find(n=>n.id===params?.target)
+        if(n.id==outputnode.id){
+          n.data={
+            ...n.data,
+            text:node.data.text,
+            triggertype:node.data.triggertype,
+            email:node.data.email,
+            password:node.data.password
+          }
+        }
+        return n
+      }))
+      setEdges((eds) => addEdge(params, eds))
+      console.log(nodes)
     }
   }
 

@@ -29,7 +29,10 @@ export function SlackComponent(props){
         case 'gmail':
             if(props.data.email && props.data.password){
                 console.log("gmail is called")
-                gmailCronJob(webhook,props.data.email,props.data.password)
+                gmailCronJob(webhook,props.data.email,props.data.password,props.data).then(()=>{
+                    
+                })
+                
                 //props.data.triggertype=undefined
             }
     }

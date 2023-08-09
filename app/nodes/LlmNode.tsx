@@ -27,6 +27,7 @@ export function LlmNode({data}){
                         return <OpenAiComponent data={data}/>
                 }
             })()}
+            <Handle type="source" position={Position.Bottom} id="a"/>
         </div>
     )
 }
