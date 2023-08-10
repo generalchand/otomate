@@ -79,7 +79,13 @@ export default function Home() {
         }
         return n
       }))
-      setEdges((eds) => addEdge(params, eds))
+      const newEdge = {
+        id: `${params.source}-${params.target}`,
+        source: params.source,
+        target: params.target,
+        type: 'straight',
+      };
+      setEdges((eds) => addEdge(newEdge, eds))
       console.log(nodes)
     }
   }
@@ -98,8 +104,9 @@ export default function Home() {
         data: {
           text:undefined
          },
-        position: { x: 0, y: 0 },
+        position: { x: 500, y: nodes.length*500 },
         type: type,
+        draggable: false
       }
       return [...nds,node]
     })
@@ -124,7 +131,8 @@ export default function Home() {
             edgeTypes={{}}
             style={{width:'100%',height:'100%'}}
             connectionLineStyle={{stroke:'rgb(139,92,246)',strokeWidth:2}}
-            
+            panOnDrag={false}
+            panOnScroll={false}
             >
              {/*  <Background /> */}
               <Controls />
