@@ -5,6 +5,7 @@ import OpenAiComponent from "../integration/openAi/openAi"
 
 export function LlmNode({data}){
     const inputRef=useRef<HTMLInputElement>(null!)
+    const [mailBody, setMailBody] = useState("");
     const [selected,setSelected]=useState('')
     const onSelect=(event)=>{
         console.log(event.target.value)
@@ -20,11 +21,14 @@ export function LlmNode({data}){
                 <option value="none">None</option>
                 <option value="openAi">OpenAi</option>
             </select>
+            <br />
+            <label htmlFor="mail">Mail</label>
+            <textarea name="mail" id="mail" cols={30} rows={2} onChange={(e) => {setMailBody(e.target.value)}} value={mailBody}></textarea>
             </div>
             {(()=>{
                 switch(selected){
                     case 'openAi':
-                        return <OpenAiComponent data={data}/>
+                        return <OpenAiComponent data={data} mailBody={mailBody}/>
                 }
             })()}
             <Handle type="source" position={Position.Bottom} id="a"/>
