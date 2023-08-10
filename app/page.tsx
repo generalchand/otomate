@@ -40,7 +40,7 @@ export default function Home() {
 
     let node=nodes.find(n=>n.id===params.source)
     let outputnode=nodes.find(n=>n.id===params?.target)
-    if(node.type==='trigger' || node.type==='llm')
+    if(node.type==='trigger')
     {
       setNodes((nds)=>nds.map((n)=>{
         if(n.id==outputnode.id){
@@ -67,7 +67,8 @@ export default function Home() {
             text:node.data.text,
             triggertype:node.data.triggertype,
             email:node.data.email,
-            password:node.data.password
+            password:node.data.password,
+            sourcenode:node
           }
         }
         return n
@@ -136,6 +137,7 @@ export default function Home() {
           <div className='hover:bg-slate-100' >
           <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', }} className='w-full py-2 px-4 ' onClick={()=>{addNode('llm')}}>LLM</button>
         </div>
+        <button onClick={()=>console.log(nodes)}>Check array</button>
 
         </div>
         

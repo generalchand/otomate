@@ -9,7 +9,6 @@
        },
        method: 'POST',
        body:JSON.stringify({text:value}),
-       cache:'no-store'
      })
      const data=await res.text();
      console.log(data)
