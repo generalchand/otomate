@@ -24,9 +24,27 @@ function OpenAiComponent({data, mailBody}) {
                     const firstPrompt = new PromptTemplate({inputVariables: ["mailBody"], template: firstTemplate})
                     const firstChain = new LLMChain({ llm: model, prompt: firstPrompt})
 
-                    const firstOutput = await firstChain.call({ mailBody: mailBody });
+                    const firstOutput = await firstChain.call({ mailBody });
 
-                    console.log(firstOutput);
+                    console.log("FIRST CLASSIFICATION",firstOutput.text);
+
+                    if(firstOutput.text == 1)
+                            console.log('Summary to slack, customer support problem')
+                    else if(firstOutput.text == 2){
+                            const secondTemplate = "You are a classifier, you classify the following body of the mail: {mailBody} into\
+                                two classes, which are 'SHIPPING TAKES MORE THAN 3 DAYS' and 'SHIPPING TAKES LESS THAN 3 DAYS', IMPORTANT: strictly output '1' for 'SHIPPING TAKES MORE THAN 3 DAYS'\
+                                and '2' for 'SHIPPING TAKES LESS THAN 3 DAYS'"
+                            const secondPrompt = new PromptTemplate({inputVariables: ["mailBody"], template: secondTemplate})
+                            const secondChain = new LLMChain({ llm: model, prompt: secondPrompt})
+
+                            const secondOutput = await secondChain.call({mailBody});
+                            console.log(secondOutput.text)
+                            if(secondOutput.text == 1)
+                                console.log("Add to MongoDB")
+                            else if(secondOutput.text == 2){
+                                console.log("Delayed message to slack")
+                            }
+                    }
 
                     await delay(1000);
                 } catch (error) {
@@ -35,6 +53,7 @@ function OpenAiComponent({data, mailBody}) {
                 }
 
                 await makeApiCall();
+                break;
 
             default:
                 console.log('NA')
