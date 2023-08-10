@@ -1,15 +1,15 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
-import { OpenAI } from 'langchain/llms/openai'
+import { AI21 } from "langchain/llms/ai21";
 import { PromptTemplate } from 'langchain/prompts'
 import { LLMChain } from 'langchain/chains'
 
-function OpenAiComponent({data, mailBody}) {
+function Ai21Component({data, mailBody}) {
     const [apiKey, setApiKey] = useState('')
     const handleChange = async (e) => {
         //process logic here
-        const model = new OpenAI({ openAIApiKey : apiKey })
+        const model = new AI21({ ai21ApiKey : apiKey })
         switch(e.target.value){
             case 'classify':
 
@@ -79,4 +79,4 @@ function OpenAiComponent({data, mailBody}) {
   )
 }
 
-export default OpenAiComponent
+export default Ai21Component

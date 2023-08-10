@@ -2,6 +2,7 @@
 import { useRef, useState } from "react"
 import { Handle, Position } from "reactflow"
 import OpenAiComponent from "../integration/openAi/openAi"
+import Ai21Component from "../integration/ai21/ai21"
 
 export function LlmNode({data}){
     const inputRef=useRef<HTMLInputElement>(null!)
@@ -20,6 +21,7 @@ export function LlmNode({data}){
             <select name="" id="" onChange={onSelect} defaultValue="none">
                 <option value="none">None</option>
                 <option value="openAi">OpenAi</option>
+                <option value="ai21">Ai21</option>
             </select>
             <br />
             <label htmlFor="mail">Mail</label>
@@ -29,6 +31,8 @@ export function LlmNode({data}){
                 switch(selected){
                     case 'openAi':
                         return <OpenAiComponent data={data} mailBody={mailBody}/>
+                    case 'ai21':
+                        return <Ai21Component data={data} mailBody={mailBody}/>
                 }
             })()}
             <Handle type="source" position={Position.Bottom} id="a"/>
