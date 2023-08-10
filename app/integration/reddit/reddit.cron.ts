@@ -15,5 +15,5 @@ export function redditCronJob(webhook:string,endpoint:string){
   }
   
 
-  setInterval(sendslackmsg,120000)
+  setInterval(sendslackmsg,12000)
 }

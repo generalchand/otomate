@@ -1,6 +1,6 @@
 "use client"
 import { useCallback, useMemo, useState } from 'react';
-import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, OnNodesChange,Node,Edge, addEdge} from 'reactflow';
+import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, OnNodesChange,Node,Edge, addEdge,StraightEdge} from 'reactflow';
 import 'reactflow/dist/style.css';
 import { TriggerNode } from './nodes/TriggerNode';
 import { ActionNode } from './nodes/ActionNode';
@@ -28,6 +28,7 @@ const initialNodes:Node[] = [
 ];
 
 export default function Home() {
+ 
 
   const [nodes,setNodes]=useState<Node[]>(initialNodes)
   const [edges,setEdges]=useState<Edge[]>(initialEdges)
@@ -39,7 +40,7 @@ export default function Home() {
 
     let node=nodes.find(n=>n.id===params.source)
     let outputnode=nodes.find(n=>n.id===params?.target)
-    if(node.type==='trigger' || node.type==='llm')
+    if(node.type==='trigger')
     {
       setNodes((nds)=>nds.map((n)=>{
         if(n.id==outputnode.id){
@@ -48,13 +49,20 @@ export default function Home() {
             text:node.data.text,
             triggertype:node.data.triggertype,
             email:node.data.email,
-            password:node.data.password
+            password:node.data.password,
+            sourcenode:node
           }
         }
         return n
       }))
+      const newEdge = {
+        id: `${params.source}-${params.target}`,
+        source: params.source,
+        target: params.target,
+        type: 'straight',
+      };
      
-      setEdges((eds) => addEdge(params, eds))
+      setEdges((eds) => addEdge(newEdge, eds))
     }
     if(node.type==='llm'){
       setNodes((nds)=>nds.map((n)=>{
@@ -65,7 +73,8 @@ export default function Home() {
             text:node.data.text,
             triggertype:node.data.triggertype,
             email:node.data.email,
-            password:node.data.password
+            password:node.data.password,
+            sourcenode:node
           }
         }
         return n
@@ -96,39 +105,50 @@ export default function Home() {
     })
     console.log(nodes)
   }
+  
+
 
 
   return (
     <>
-    <div className='flex flex-row bg-gray-100' style={{height:'100vh'}}>
+    <div className='flex flex-row bg-gray-100 justify-between' style={{height:'100vh'}}>
 
-    <div style={{flex:0.7}}>
-            <ReactFlow
-            nodes={nodes}
+    <div className='grow'>
+            <ReactFlow 
+            nodes={nodes} 
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
+            edgeTypes={{}}
             style={{width:'100%',height:'100%'}}
+            connectionLineStyle={{stroke:'rgb(139,92,246)',strokeWidth:2}}
+            
             >
              {/*  <Background /> */}
               <Controls />
             </ReactFlow>
       </div>
-      <div className='bg-white ' style={{flex:0.3}}>
-        <div  style={{margin:'20px',fontSize:'2rem'}}>
+      <div className='bg-white p-6 mb-6 drop-shadow-xl ' >
+        <div  className='text-[2rem] mx-20 my-5 font-semibold '>
         Tools
+        </div> 
+
+        <div className='text-[1.2rem] flex flex-col gap-8 '>
+          <div className='hover:bg-slate-100' >
+          <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)' }} className='w-full py-2 px-4' onClick={()=>{addNode('trigger')}}>Trigger</button>
+          </div>
+          <div className='hover:bg-slate-100'>
+            <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', }} className='w-full py-2 px-4 ' onClick={()=>{addNode('action')}}>Actions</button>
+          </div>
+          <div className='hover:bg-slate-100' >
+          <button style={{background:' linear-gradient(180deg, #E1E0FB 11.46%, #E1ECF7 61.98%)', }} className='w-full py-2 px-4 ' onClick={()=>{addNode('llm')}}>LLM</button>
         </div>
-        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
-        <button onClick={()=>{addNode('trigger')}}>Trigger</button>
+        <button onClick={()=>console.log(nodes)}>Check array</button>
+
         </div>
-        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
-          <button onClick={()=>{addNode('action')}}>Actions</button>
-        </div>
-        <div className='hover:bg-slate-100' style={{padding:'20px',fontSize:'1.2rem'}}>
-          <button onClick={()=>{addNode('llm')}}>LLM</button>
-        </div>
+        
       </div>
     </div>
 
