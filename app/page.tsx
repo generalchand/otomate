@@ -1,6 +1,6 @@
 "use client"
 import { useCallback, useMemo, useState } from 'react';
-import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, OnNodesChange,Node,Edge, addEdge} from 'reactflow';
+import ReactFlow, { Controls, Background, applyNodeChanges, applyEdgeChanges, OnNodesChange,Node,Edge, addEdge,StraightEdge} from 'reactflow';
 import 'reactflow/dist/style.css';
 import { TriggerNode } from './nodes/TriggerNode';
 import { ActionNode } from './nodes/ActionNode';
@@ -55,8 +55,14 @@ export default function Home() {
         }
         return n
       }))
+      const newEdge = {
+        id: `${params.source}-${params.target}`,
+        source: params.source,
+        target: params.target,
+        type: 'straight',
+      };
      
-      setEdges((eds) => addEdge(params, eds))
+      setEdges((eds) => addEdge(newEdge, eds))
     }
     if(node.type==='llm'){
       setNodes((nds)=>nds.map((n)=>{
@@ -98,6 +104,8 @@ export default function Home() {
     })
     console.log(nodes)
   }
+  
+
 
 
   return (
@@ -107,12 +115,12 @@ export default function Home() {
     <div className='grow'>
             <ReactFlow 
             nodes={nodes} 
-
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
+            edgeTypes={{}}
             style={{width:'100%',height:'100%'}}
             connectionLineStyle={{stroke:'rgb(139,92,246)',strokeWidth:2}}
             
